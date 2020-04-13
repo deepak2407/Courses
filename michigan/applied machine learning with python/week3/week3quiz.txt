@@ -1,0 +1,30 @@
+
+5
+y_scores_lr = m.fit(X_train,y_train).decision_function(X_test)
+precision,recall,thresholds = precision_recall_curve(y_test, y_scores_lr)
+plt.plot(precision,recall, label='Precision-Recall Curve')
+plt.show()
+
+8
+svm = m.fit(X_train,y_train)
+svm_predicted_mc = svm.predict(X_test)
+print(precision_score(y_test, svm_predicted_mc,average='micro'))
+
+13
+grid_values={'gamma':[0.01, 0.1,1,10], 'C': [0.01,0.1,1,10]}
+grid_m_acc=GridSearchCV(m,param_grid = grid_values, scoring='recall')
+grid_m_acc.fit(X_train,y_train)
+y_scores= grid_m_acc.predict(X_test)
+rec_score=recall_score(y_test,y_scores)
+prec_score=precision_score(y_test,y_scores)
+rec_score-prec_score
+
+14
+
+grid_values={'gamma':[0.01, 0.1,1,10], 'C': [0.01,0.1,1,10]}
+grid_m_acc=GridSearchCV(m,param_grid = grid_values, scoring='precision')
+grid_m_acc.fit(X_train,y_train)
+y_scores= grid_m_acc.predict(X_test)
+rec_score=recall_score(y_test,y_scores)
+prec_score=precision_score(y_test,y_scores)
+prec_score-rec_score
